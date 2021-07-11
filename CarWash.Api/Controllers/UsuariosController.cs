@@ -29,13 +29,17 @@ namespace CarWash.Api.Controllers
             _config = config;
             
         }
-
-        [HttpGet,Route("Prueba")]
-        public Response<object> Prueba()
+        [HttpPost,Route("InsertaUsuario")]           
+       public Response<object> InsertaUsuario(string us_nombre, string us_apellidoPaterno,string us_apellidoMaterno,string us_usuario,string password,int ro_id)
         {
-            return usuarioBussines.prueba();
+            return usuarioBussines.InsertaUsuario(us_nombre, us_apellidoPaterno, us_apellidoMaterno, us_usuario, password, ro_id);
         }
 
+        [HttpPost,Route("RegistroCiente")]
+        public       Response<object> RegistroCiente(string usuario,string password)
+        {
+            return usuarioBussines.RegistroCliente(usuario,password);
+        }
 
         [HttpPost]
         [Route("Login")]
@@ -61,6 +65,46 @@ namespace CarWash.Api.Controllers
 
             ClaimsIdentity claimsIdentity = new ClaimsIdentity(new[] {
                 new Claim("usuario",  Utils.Base64_Encode(usuario.us_id.ToString())),
+               // new Claim(ClaimTypes.PrimarySid, usuario.us_id.ToString()),
+            });
+
+            var token = new JwtSecurityToken(
+                _config["Jwt:Issuer"],
+                _config["Jwt:Issuer"],
+                claimsIdentity.Claims,
+                expires: DateTime.Now.AddMinutes(120),
+                signingCredentials: credentials);
+
+            JwtSecurityTokenHandler jwtSecurityTokenHandler = new JwtSecurityTokenHandler();
+
+
+            return jwtSecurityTokenHandler.WriteToken(token);
+        }
+    
+        [HttpPost]
+        [Route("LoginCliente")]
+
+        public IActionResult LoginCliente(string email, string password)
+        {
+
+            Response<ClienteModel> user = usuarioBussines.LoginCliente(email, password);
+            IActionResult response = Unauthorized();
+            if (user.Code == ResponseEnum.Ok)
+            {
+                user.Result.cl_athorization = GenerateJSONWebTokenCliente(user.Result);
+                response = Ok(user);
+            }
+            return response;
+
+        }
+
+        private string GenerateJSONWebTokenCliente(ClienteModel usuario)
+        {
+            var securityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_config["Jwt:Key"]));
+            var credentials = new SigningCredentials(securityKey, SecurityAlgorithms.HmacSha256);
+
+            ClaimsIdentity claimsIdentity = new ClaimsIdentity(new[] {
+                new Claim("usuario",  Utils.Base64_Encode(usuario.cl_id.ToString())),
                // new Claim(ClaimTypes.PrimarySid, usuario.us_id.ToString()),
             });
 

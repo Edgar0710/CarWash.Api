@@ -1,4 +1,5 @@
 ﻿using CarWash.Business.Business;
+using CarWash.Business.IBusiness;
 using CarWash.Data.IRepository;
 using CarWash.Data.Repository;
 using Microsoft.Extensions.DependencyInjection;
@@ -15,6 +16,7 @@ namespace CarWash.Api.dependencies
         {
             services.AddScoped(typeof(IGeneralRepository<>), typeof(GeneralRepository<>));
             services.AddScoped<IUsuarioBusiness, UsuarioBusiness>();
+            services.AddScoped<IServicioBusiness, ServicioBusiness>();
 
 
 
