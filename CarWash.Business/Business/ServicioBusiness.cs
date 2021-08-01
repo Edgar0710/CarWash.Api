@@ -88,6 +88,31 @@ namespace CarWash.Business.Business
             return response;
         }
 
+        public Response<object> AutosCliente(int cliente)
+        {
+            Response<object> response = new Response<object>();
+            try
+            {
+
+                DynamicParameters parameters = new DynamicParameters();
+                parameters.Add("cl_id", cliente, DbType.Int32);
+
+
+                response.Result = repository.GetList("sps_autosCliente", parameters);
+
+                response.Code = ResponseEnum.Ok;
+
+            }
+            catch (Exception e)
+            {
+                //logger.LogEror("Ocurrio un error en LogginBussines/Login=>" + e.Message);
+                response.Code = ResponseEnum.Fail;
+                response.Menssage = "Error en el login";
+
+            }
+            return response;
+        }
+
         public Response<object> CitasCliente(int cliente)
         {
             Response<object> response = new Response<object>();
@@ -139,7 +164,7 @@ namespace CarWash.Business.Business
             return response;
         }
 
-        public Response<object> CrearCita(int auto, int servicio, string fecha)
+        public Response<object> CrearCita(int auto, int servicio, string fecha,string hora)
         {
             Response<object> response = new Response<object>();
             try
@@ -149,6 +174,7 @@ namespace CarWash.Business.Business
                 parameters.Add("au_id", auto, DbType.Int32);
                 parameters.Add("se_id", servicio, DbType.Int32);
                 parameters.Add("as_fecha", fecha, DbType.Date);
+                parameters.Add("as_hora", hora, DbType.String);
                
                 response.Result = repository.Execute("spi_createCita", parameters);
 

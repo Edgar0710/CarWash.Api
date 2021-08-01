@@ -25,6 +25,11 @@ namespace CarWash.Api.Controllers
         public Response<object> CitasCliente(int cliente)
         {
             return servicioBusiness.CitasCliente(cliente);
+        }   
+        [HttpGet, Route("AutosCliente")]
+        public Response<object> AutosCliente(int cliente)
+        {
+            return servicioBusiness.AutosCliente(cliente);
         }  
         [HttpGet, Route("AllCitas")]
         public Response<object> AllCitas()
@@ -44,8 +49,8 @@ namespace CarWash.Api.Controllers
         return servicioBusiness.CrearServicio(se_nombre, se_precio, se_descripcion, us_id);
         }
         [HttpPost, Route("CrearCita")]
-        public Response<object> CrearCita(int auto,int servicio,string fecha) { 
-        return servicioBusiness.CrearCita(auto, servicio, fecha);
+        public Response<object> CrearCita(int auto,int servicio,string fecha, string hora) { 
+        return servicioBusiness.CrearCita(auto, servicio, fecha,hora);
         }
         [HttpPost, Route("CrearAuto")]
         public Response<object> CrearAuto(int cliente, string tipoAuto)
