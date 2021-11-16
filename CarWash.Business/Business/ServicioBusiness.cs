@@ -95,7 +95,7 @@ namespace CarWash.Business.Business
             {
 
                 DynamicParameters parameters = new DynamicParameters();
-                parameters.Add("cl_id", cliente, DbType.Int32);
+                parameters.Add("_cl_id", cliente, DbType.Int32);
 
 
                 response.Result = repository.GetList("sps_autosCliente", parameters);
@@ -145,8 +145,8 @@ namespace CarWash.Business.Business
             {
 
                 DynamicParameters parameters = new DynamicParameters();
-                parameters.Add("cl_id", cliente, DbType.Int32);
-                parameters.Add("au_tipo", tipoAuto, DbType.String);
+                parameters.Add("_cl_id", cliente, DbType.Int32);
+                parameters.Add("_au_tipo", tipoAuto, DbType.String);
                
 
                 response.Result = repository.Execute("spi_auto", parameters);
@@ -171,10 +171,10 @@ namespace CarWash.Business.Business
             {
 
                 DynamicParameters parameters = new DynamicParameters();
-                parameters.Add("au_id", auto, DbType.Int32);
-                parameters.Add("se_id", servicio, DbType.Int32);
-                parameters.Add("as_fecha", fecha, DbType.Date);
-                parameters.Add("as_hora", hora, DbType.String);
+                parameters.Add("_au_id", auto, DbType.Int32);
+                parameters.Add("_se_id", servicio, DbType.Int32);
+                parameters.Add("_as_fecha", fecha, DbType.Date);
+                parameters.Add("_as_hora", hora, DbType.String);
                
                 response.Result = repository.Execute("spi_createCita", parameters);
 
@@ -198,10 +198,10 @@ namespace CarWash.Business.Business
             {
 
                 DynamicParameters parameters = new DynamicParameters();
-                parameters.Add("se_nombre", se_nombre, DbType.String);
-                parameters.Add("se_precio", se_precio, DbType.Decimal);
-                parameters.Add("se_descripcion", se_descripcion, DbType.String);
-                parameters.Add("us_id", us_id, DbType.Int32);
+                parameters.Add("_se_nombre", se_nombre, DbType.String);
+                parameters.Add("_se_precio", se_precio, DbType.Decimal);
+                parameters.Add("_se_descripcion", se_descripcion, DbType.String);
+                parameters.Add("_us_id", us_id, DbType.Int32);
              
                 response.Result = repository.Execute("spi_servicio", parameters);
             
@@ -225,7 +225,7 @@ namespace CarWash.Business.Business
             {
 
                 DynamicParameters parameters = new DynamicParameters();
-                parameters.Add("as_id", cita, DbType.Int32);
+                parameters.Add("_as_id", cita, DbType.Int32);
                 response.Result = repository.Execute("spu_MarcarCitaComoPagado", parameters);
                 response.Code = ResponseEnum.Ok;
 
