@@ -24,7 +24,7 @@ namespace CarWash.Business.Business
             {
 
                 DynamicParameters parameters = new DynamicParameters();
-                parameters.Add("se_id", servicio, DbType.Int32);
+                parameters.Add("_se_id", servicio, DbType.Int32);
                 parameters.Add("se_nombre", nombre, DbType.String);
                 parameters.Add("se_precio", precio, DbType.Decimal);
                 parameters.Add("se_descripcion", descripcion, DbType.String);
@@ -73,7 +73,7 @@ namespace CarWash.Business.Business
             {
 
                 DynamicParameters parameters = new DynamicParameters();
-                parameters.Add("as_id", cita, DbType.Int32);
+                parameters.Add("_as_id", cita, DbType.Int32);
                 response.Result = repository.Execute("spu_aprobarCita", parameters);
                 response.Code = ResponseEnum.Ok;
 

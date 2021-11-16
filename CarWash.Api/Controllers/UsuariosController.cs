@@ -36,7 +36,7 @@ namespace CarWash.Api.Controllers
         }
 
         [HttpPost,Route("RegistroCiente")]
-        public       Response<object> RegistroCiente(string usuario,string password)
+        public  Response<object> RegistroCiente(string usuario,string password)
         {
             return usuarioBussines.RegistroCliente(usuario,password);
         }
