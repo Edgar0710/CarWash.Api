@@ -218,6 +218,7 @@ namespace CarWash.Business.Business
             return response;
         }
 
+
         public Response<object> MarcarPago(int cita)
         {
             Response<object> response = new Response<object>();
